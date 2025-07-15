@@ -43,8 +43,7 @@ class Thread {
       text: this.text,
       created_on: this.created_on,
       bumped_on: this.bumped_on,
-      reported: this.reported,
-      replies: this.replies,
+      replies: this.replies.map(reply => reply.toJSON()),
     };
   }
 

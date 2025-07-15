@@ -36,8 +36,11 @@ module.exports = function (app) {
     .get((req, res) => {
       try {
         const { board } = req.params;
-        const threads = threadRepo.findByBoard(board);
-        res.json(threads);
+
+        const threads = threadRepo.findByBoard(board, { limit: 10 });
+        const threadSummaries = threads.map(thread => thread.toSummaryJSON());
+
+        res.json(threadSummaries);
       } catch (error) {
         console.error("Error getting threads:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -122,7 +125,7 @@ module.exports = function (app) {
           return res.status(404).json({ error: "Thread not found" });
         }
 
-        res.json(thread);
+        res.json(thread.toJSON());
       } catch (error) {
         console.error("Error getting thread:", error);
         res.status(500).json({ error: "Internal server error" });

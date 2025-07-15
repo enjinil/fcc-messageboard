@@ -19,6 +19,14 @@ class ThreadRepo {
     );
   }
 
+  findByBoard(board, {limit} = {}) {
+    const filteredThreads = this.threads
+      .filter(thread => thread.board === board)
+      .sort((a, b) => new Date(b.bumped_on) - new Date(a.bumped_on));
+    
+    return limit ? filteredThreads.slice(0, limit) : filteredThreads;
+  }
+
   findByBoard(board) {
     return this.threads
       .filter(thread => thread.board === board)
