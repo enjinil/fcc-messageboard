@@ -19,7 +19,6 @@ suite("Functional Tests", function () {
         delete_password: testPassword,
       })
       .end((err, res) => {
-        console.log(res.body);
         assert.equal(res.status, 200);
         assert.equal(res.body.text, "test thread");
         testThreadId = res.body._id;
